@@ -1,0 +1,9 @@
+name: "Shards & Splinters"
+description:
+"Weapons made of certain materials and types are prone to shatter, if not properly maintained. \n\n
+Materials like chitin, iron or glass are considered to be brittle and will have a chance of shattering if their durability falls below a certain threshold.\n\n
+Materials not mentioned in the list below are considered to be of higher structural quality and will not shatter, Dwemer or Daedric weapons.\n\n
+This will also affect magic weapons made from brittle materials.\n\n
+The chance of shattering is decreased by the players luck stat."
+settingsTitle: "Options"
+settingsDesc: "Settings for this mod"
