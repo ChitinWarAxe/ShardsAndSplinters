@@ -1,7 +1,5 @@
 # Shards & Splinters
 
-_As the Dunmer crept deeper into the dank, shadowy dungeon, the air thickened with the stench of decay and impending doom. His heart pounded as he tightened his grip on his trusty sword, its blade worn and nicked from countless battles. Suddenly, from the abyssal darkness, an undead creature lunged with a guttural snarl, eyes burning with unholy fire. The Dunmer swung his weapon with desperate force, steel meeting bone in a fierce clash. But then, a horrifying crack echoed through the chamber—his sword shattered, fragments scattering across the cold, unforgiving stone. He was left defenseless, heart racing, as the relentless foe advanced, the taste of death hanging thick in the air..._
-
 ![A drawing of a dunmer with a broken sword](images/dunmer.png "A drawing of a dunmer with a broken sword")
 
 ## Features

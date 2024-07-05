@@ -47,7 +47,7 @@ I.Settings.registerGroup {
             key = "whiteListedTypesSetting",
             name = "Whitelisted Materials and Types",
             description= "List of materials and weapon types that will not shatter despite being damaged. Keywords are checked to exist within the weapon model.",
-            default = "dwemer, ebony, daedric, adamant, w_art, _uni",
+            default = "dwemer, ebony, daedric, adamant, anarchy, w_de_fork, w_art, _uni",
             renderer = "textLine"
         },
         {
