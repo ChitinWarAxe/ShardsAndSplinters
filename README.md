@@ -1,6 +1,8 @@
 # Shards & Splinters
 
-Make your chitin war axe shatter while fighting cave rats!
+_As the Dunmer crept deeper into the dank, shadowy dungeon, the air thickened with the stench of decay and impending doom. His heart pounded as he tightened his grip on his trusty sword, its blade worn and nicked from countless battles. Suddenly, from the abyssal darkness, an undead creature lunged with a guttural snarl, eyes burning with unholy fire. The Dunmer swung his weapon with desperate force, steel meeting bone in a fierce clash. But then, a horrifying crack echoed through the chamber—his sword shattered, fragments scattering across the cold, unforgiving stone. He was left defenseless, heart racing, as the relentless foe advanced, the taste of death hanging thick in the air..._
+
+![A drawing of a dunmer with a broken sword](images/dunmer.png "A drawing of a dunmer with a broken sword")
 
 ## Features
 
@@ -8,9 +10,9 @@ This mod adds the chance for your weapon to break if you don’t take care of it
 
 When your weapon’s durability drops below a certain threshold, there’s a growing chance it might shatter mid-fight. Your luck attribute decreases this chance.
 
-Will you be ready to face those Telvanni agents at the Caldera mine, and the 20 rats along the way? Will your iron longsword endure the stress? Should you bring some repair prongs or a backup weapon? Or both? It might be worth training your hand-to-hand skill too, just in case!
-
 Tamriel Data items are supported.
+
+![Your chitin war axe broke!](images/broke.png "Your chitin war axe broke!")
 
 ## Configuration
 
