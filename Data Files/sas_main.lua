@@ -28,36 +28,36 @@ interfaces.Settings.registerGroup {
     settings = {
         {
             key = "brittleWeaponsSetting",
-            name = "Brittle Weapons",
-            description= "Certain Weapons have a chance to shatter.",
+            name = "Enable/Disable Weapons breaking",
+            description= "Enable or disable the chance for weapons to shatter when used.",
             default = true,
             renderer = "checkbox"
         },
         {
             key = "breakThresholdSetting",
-            name = "Durability threshold",
-            description= "If the durability of a weapon falls below this threshold in %, the weapon will be at risk of breaking.",
+            name = "Durability Threshold",
+            description= "When a weapon's durability falls below this percentage, it becomes at risk of breaking.",
             default = 90,
             renderer = "number"
         },
         {
             key = "luckModifierSetting",
             name = "Luck Modifier",
-            description= "Negativly impacts how luck is decreasing the break chance. A higher number means a greater breaking chance.",
+            description= "Negatively affects how luck reduces the chance of a weapon breaking. A higher number increases the chance of breaking.",
             default = 1.5,
             renderer = "number"
         },
         {
             key = "whiteListedTypesSetting",
             name = "Whitelisted Materials and Types",
-            description= "List of materials and types of weapons that deemed of higher quality, and will not shatter despite being damaged. Keywords are based on the weapon model.",
-            default = "dwemer, ebony, daedric, adamantium, w_art, _uni",
+            description= "List of materials and weapon types that will not shatter despite being damaged. Keywords are checked to exist within the weapon model.",
+            default = "dwemer, ebony, daedric, adamant, w_art, _uni",
             renderer = "textLine"
         },
         {
             key = "brittleDebug",
             name = "Debug Log",
-            description= "Adds info to the console log for debugging. ",
+            description= "Enables additional information in the console log for debugging purposes.",
             default = false,
             renderer = "checkbox"
         }
