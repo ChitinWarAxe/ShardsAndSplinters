@@ -25,7 +25,14 @@ I.Settings.registerGroup {
         {
             key = "brittleWeaponsSetting",
             name = "Enable/Disable Weapons breaking",
-            description= "Enable or disable the chance for weapons to shatter when used.",
+            description= "Enable or disable the chance for weapons to shatter.",
+            default = true,
+            renderer = "checkbox"
+        },
+        {
+            key = "brittleShieldsSetting",
+            name = "Enable/Disable Shields breaking",
+            description= "Enable or disable the chance for shields to shatter.",
             default = true,
             renderer = "checkbox"
         },
