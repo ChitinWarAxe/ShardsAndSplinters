@@ -31,16 +31,16 @@ local loop = time.runRepeatedly(function()
                 print('Condition: ' .. getEquippedWeaponPercentualDurability()/10 .. '%, breakchance: ' .. getEquippedWeaponBreakChance()/10 .. '%, Threshold: ' .. getSettingDurabilityThreshold() .. '%')
                 
                 if isSavedWeaponBrittle then
-                    print('Your weapons looks somewhat brittle!')
+                    print('Your weapon looks somewhat brittle!')
                 end
             end
         end
         
-        if (isSavedWeaponBrittle
-            and getEquippedWeaponDurability() < savedWeaponCondition
-            and getEquippedWeaponPercentualDurability() <= getSettingDurabilityThreshold()*10)
-            or (getEquippedWeaponDurability() == 0 and 11 ~= getEquippedWeaponType())
-            then
+        if isSavedWeaponBrittle 
+        and getEquippedWeaponDurability() < savedWeaponCondition 
+        and getEquippedWeaponPercentualDurability() <= getSettingDurabilityThreshold()*10 
+        and 11 ~= getEquippedWeaponType() 
+        then
             
             if getSettingDebug() then
                 print("Your weapon's condition got worse! " .. savedWeaponCondition .. " -> " .. getEquippedWeaponDurability())
@@ -62,8 +62,7 @@ local loop = time.runRepeatedly(function()
     
     if getShieldSlot() and getSettingShieldsAreBrittle() then
     
-        if (savedShieldId ~= getShieldSlotId()) and isShieldSlotAShield() then
-            print('yep. A shield it is indeed. ' .. savedShieldId .. ' ' .. getShieldSlotId());
+        if (savedShieldId ~= getShieldSlotId()) and isShieldSlotAShield() then  -- Equipped another shield, or Lua script was reloaded.
             
             savedShieldId = getShieldSlotId()
             savedShieldCondition = getEquippedShieldCondition()
