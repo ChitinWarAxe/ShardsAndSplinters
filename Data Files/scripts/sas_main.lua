@@ -20,41 +20,45 @@ local loop = time.runRepeatedly(function()
 
     if getEquippedWeapon() and getSettingWeaponsAreBrittle() then
 
-        if (savedWeaponId ~= getEquippedWeaponId()) and isWeaponSlotAWeapon() then -- Equipped another weapon, or Lua script was reloaded.
+        if isWeaponSlotAWeapon() then
 
-            savedWeaponId = getEquippedWeaponId()
-            savedWeaponCondition = getEquippedWeaponDurability()
-            isSavedWeaponBrittle = isEquippedWeaponBrittle()
-            
-            if getSettingDebug() then
-                print('Equipped: ' .. getEquippedWeaponName() .. ', Model: ' .. getEquippedWeaponModel() .. ', Type: ' .. getEquippedWeaponType() )
-                print('Condition: ' .. getEquippedWeaponPercentualDurability()/10 .. '%, breakchance: ' .. getEquippedWeaponBreakChance()/10 .. '%, Threshold: ' .. getSettingDurabilityThreshold() .. '%')
+            if (savedWeaponId ~= getEquippedWeaponId()) then
+
+                savedWeaponId = getEquippedWeaponId()
+                savedWeaponCondition = getEquippedWeaponDurability()
+                isSavedWeaponBrittle = isEquippedWeaponBrittle()
                 
-                if isSavedWeaponBrittle then
-                    print('Your weapon looks somewhat brittle!')
+                if getSettingDebug() then
+                    print('Equipped: ' .. getEquippedWeaponName() .. ', Model: ' .. getEquippedWeaponModel() .. ', Type: ' .. getEquippedWeaponType() )
+                    print('Condition: ' .. getEquippedWeaponPercentualDurability()/10 .. '%, breakchance: ' .. getEquippedWeaponBreakChance()/10 .. '%, Threshold: ' .. getSettingDurabilityThreshold() .. '%')
+                    
+                    if isSavedWeaponBrittle then
+                        print('Your weapon looks somewhat brittle!')
+                    end
                 end
             end
-        end
-        
-        if isSavedWeaponBrittle 
-        and getEquippedWeaponDurability() < savedWeaponCondition 
-        and getEquippedWeaponPercentualDurability() <= getSettingDurabilityThreshold()*10 
-        and 11 ~= getEquippedWeaponType() 
-        then
             
-            if getSettingDebug() then
-                print("Your weapon's condition got worse! " .. savedWeaponCondition .. " -> " .. getEquippedWeaponDurability())
-            end
+            if isSavedWeaponBrittle 
+            and getEquippedWeaponDurability() < savedWeaponCondition 
+            and getEquippedWeaponPercentualDurability() <= getSettingDurabilityThreshold()*10 
+            and 11 ~= getEquippedWeaponType() 
+            then
+                
+                if getSettingDebug() then
+                    print("Your weapon's condition got worse! " .. savedWeaponCondition .. " -> " .. getEquippedWeaponDurability())
+                end
 
-            if (checkForBreak() or getEquippedWeaponDurability() == 0) then
-                ui.showMessage('Your ' .. getEquippedWeaponName() .. ' broke!')   
-                core.sendGlobalEvent("remove", {object=getEquippedWeapon()})         
-                ambient.playSound("critical damage")
-                ambient.playSound("repair fail")
-            end            
-        end
+                if (checkForBreak() or getEquippedWeaponDurability() == 0) then
+                    ui.showMessage('Your ' .. getEquippedWeaponName() .. ' broke!')   
+                    core.sendGlobalEvent("remove", {object=getEquippedWeapon()})         
+                    ambient.playSound("critical damage")
+                    ambient.playSound("repair fail")
+                end            
+            end
+            
+            savedWeaponCondition = getEquippedWeaponDurability()
         
-        savedWeaponCondition = getEquippedWeaponDurability()
+        end
 
     end
 
@@ -62,39 +66,43 @@ local loop = time.runRepeatedly(function()
     
     if getShieldSlot() and getSettingShieldsAreBrittle() then
     
-        if (savedShieldId ~= getShieldSlotId()) and isShieldSlotAShield() then  -- Equipped another shield, or Lua script was reloaded.
-            
-            savedShieldId = getShieldSlotId()
-            savedShieldCondition = getEquippedShieldCondition()
-            isSavedShieldBrittle = isItemBrittle(getEquippedShieldModel())
-            
-            if getSettingDebug() then
-                print('Equipped: ' .. getEquippedShieldName() .. ', Model: ' .. getEquippedShieldModel())
-                print('Condition: ' .. getEquippedShieldPercentualCondition()/10 .. '%, breakchance: ' .. getItemBreakChance(getEquippedShieldCondition(),getEquippedShieldHealth() )/10 .. '%, Threshold: ' .. getSettingDurabilityThreshold() .. '%')
-            --    
-                if isSavedShieldBrittle then
-                    print('Your shield looks somewhat brittle!')
+        if isShieldSlotAShield() then
+        
+            if (savedShieldId ~= getShieldSlotId()) then  -- Equipped another shield, or Lua script was reloaded.
+                
+                savedShieldId = getShieldSlotId()
+                savedShieldCondition = getEquippedShieldCondition()
+                isSavedShieldBrittle = isItemBrittle(getEquippedShieldModel())
+                
+                if getSettingDebug() then
+                    print('Equipped: ' .. getEquippedShieldName() .. ', Model: ' .. getEquippedShieldModel())
+                    print('Condition: ' .. getEquippedShieldPercentualCondition()/10 .. '%, breakchance: ' .. getItemBreakChance(getEquippedShieldCondition(),getEquippedShieldHealth() )/10 .. '%, Threshold: ' .. getSettingDurabilityThreshold() .. '%')
+                --    
+                    if isSavedShieldBrittle then
+                        print('Your shield looks somewhat brittle!')
+                    end
                 end
             end
-        end
-        
-        if (isSavedShieldBrittle
-            and getEquippedShieldCondition() < savedShieldCondition
-            and getEquippedShieldPercentualCondition() <= getSettingDurabilityThreshold()*10)
-        then
-            if getSettingDebug() then
-                print("Your shield's condition got worse! " .. savedShieldCondition .. " -> " .. getEquippedShieldCondition() )
+            
+            if (isSavedShieldBrittle
+                and getEquippedShieldCondition() < savedShieldCondition
+                and getEquippedShieldPercentualCondition() <= getSettingDurabilityThreshold()*10)
+            then
+                if getSettingDebug() then
+                    print("Your shield's condition got worse! " .. savedShieldCondition .. " -> " .. getEquippedShieldCondition() )
+                end
+                
+                    if (checkForItemBreak(getEquippedShieldCondition(), getEquippedShieldHealth())) then
+                    ui.showMessage('Your ' .. getEquippedShieldName() .. ' broke!')   
+                    core.sendGlobalEvent("remove", {object=getShieldSlot()})         
+                    ambient.playSound("critical damage")
+                    ambient.playSound("repair fail")
+                end      
             end
             
-                if (checkForItemBreak(getEquippedShieldCondition(), getEquippedShieldHealth())) then
-                ui.showMessage('Your ' .. getEquippedShieldName() .. ' broke!')   
-                core.sendGlobalEvent("remove", {object=getShieldSlot()})         
-                ambient.playSound("critical damage")
-                ambient.playSound("repair fail")
-            end      
-        end
+            savedShieldCondition = getEquippedShieldCondition()
         
-        savedShieldCondition = getEquippedShieldCondition()
+        end
         
     end
     
