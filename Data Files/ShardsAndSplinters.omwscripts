@@ -1,4 +1,4 @@
-PLAYER: scripts/sas_mcm.lua
-PLAYER: scripts/sas_util.lua
-PLAYER: scripts/sas_main.lua
-GLOBAL: scripts/sas_global.lua
+PLAYER: Scripts/ShardsAndSplinters/sas_mcm.lua
+PLAYER: Scripts/ShardsAndSplinters/sas_util.lua
+PLAYER: Scripts/ShardsAndSplinters/sas_main.lua
+GLOBAL: Scripts/ShardsAndSplinters/sas_global.lua

@@ -1,0 +1,29 @@
+name: "Shards & Splinters"
+description: |
+  Fügt die Möglichkeit hinzu, dass deine Waffen und Schilde zerbrechen können, wenn du sie nicht pflegst. Die meisten Gegenstände können zersplittern, außer hochwertige wie Adamantium-, Dwemer- und Daedrische Waffen und Schilde. Artefaktwaffen und -schilde sind sicher, gewöhnliche magische Gegenstände jedoch nicht.
+  
+  Sinkt die Haltbarkeit eines Gegenstands unter einen bestimmten Schwellenwert, steigt die Wahrscheinlichkeit, dass er im Kampf zerbricht. Dein Glücks-Attribut verringert diese Chance.
+
+settingsTitle: "Optionen"
+settingsDesc: "Einstellungen für diesen Mod"
+
+sasBrittleWeaponsToggleName: "Waffenbrechen Ein/Aus"
+sasBrittleWeaponsToggleDesc: "Aktiviert oder deaktiviert die Möglichkeit, dass Waffen zersplittern."
+
+sasBrittleShieldsToggleName: "Schildbrechen Ein/Aus"
+sasBrittleShieldsToggleDesc: "Aktiviert oder deaktiviert die Möglichkeit, dass Schilde zersplittern."
+
+sasBreakThresholdName: "Haltbarkeitsschwelle"
+sasBreakThresholdDesc: "Sinkt die Haltbarkeit eines Gegenstands unter diesen Prozentsatz, besteht das Risiko, dass er zerbricht."
+
+sasLuckModifierName: "Glücksmodifikator"
+sasLuckModifierDesc: "Beeinflusst negativ, wie dein Glück die Wahrscheinlichkeit eines Gegenstandsbruchs verringert. Ein höherer Wert erhöht die Bruchwahrscheinlichkeit."
+
+sasWhiteListedTypesName: "Ausgenommene Materialien und Typen"
+sasWhiteListedTypesDesc: "Liste der Materialien und Typen, die trotz Beschädigung nicht zersplittern. Schlüsselwörter werden im Modell des Gegenstands überprüft."
+
+sasBrittleDebugToggleName: "Debug-Log"
+sasBrittleDebugToggleDesc: "Aktiviert zusätzliche Informationen im Konsolen-Log für Debugging-Zwecke."
+
+itemBreakMessage: "{name} ist zerbrochen!"
+

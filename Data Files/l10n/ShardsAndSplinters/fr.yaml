@@ -1,0 +1,29 @@
+name: "Éclats et Éclisses"
+description: |
+  Ajoute la possibilité que vos armes et boucliers se brisent si vous ne les entretenez pas. La plupart des armes peuvent se briser, sauf les plus qualitatives comme celles en adamantium, dwemer et daedrique. Les armes et boucliers d'artefact sont sécurisés, mais vos armes magiques ordinaires ne le sont pas.
+  
+  Lorsque la durabilité de votre arme tombe en dessous d'un certain seuil, il y a une chance croissante qu'elle se brise en plein combat. Votre attribut de chance diminue cette probabilité.
+
+settingsTitle: "Options"
+settingsDesc: "Paramètres pour ce mod"
+
+sasBrittleWeaponsToggleName: "Activer/Désactiver le Brise-arme"
+sasBrittleWeaponsToggleDesc: "Active ou désactive la possibilité que les armes se brisent."
+
+sasBrittleShieldsToggleName: "Activer/Désactiver le Brise-bouclier"
+sasBrittleShieldsToggleDesc: "Active ou désactive la possibilité que les boucliers se brisent."
+
+sasBreakThresholdName: "Seuil de Durabilité"
+sasBreakThresholdDesc: "Lorsque la durabilité d'un objet tombe en dessous de ce pourcentage, il devient vulnérable à la rupture."
+
+sasLuckModifierName: "Modificateur de Chance"
+sasLuckModifierDesc: "Affecte négativement la façon dont la chance réduit la probabilité de rupture d'un objet. Un nombre plus élevé augmente cette probabilité."
+
+sasWhiteListedTypesName: "Matériaux et Types Autorisés"
+sasWhiteListedTypesDesc: "Liste des matériaux et types d'armes qui ne se briseront pas malgré les dommages. Les mots-clés sont vérifiés dans le modèle de l'arme."
+
+sasBrittleDebugToggleName: "Journal de Débogage"
+sasBrittleDebugToggleDesc: "Active des informations supplémentaires dans le journal de la console à des fins de débogage."
+
+itemBreakMessage: "Votre {name} s'est brisé !"
+

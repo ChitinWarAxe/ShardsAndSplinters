@@ -7,44 +7,38 @@ local core = require('openmw.core')
 local storage = require('openmw.storage')
 local interfaces = require('openmw.interfaces')
 
+local L = core.l10n("ShardsAndSplinters")
+
 math.randomseed(os.time())
 
 local settings = storage.playerSection("ShardsAndSplintersSettings")
 
 function getSettingWeaponsAreBrittle()
-    return settings:get("brittleWeaponsSetting")
+    return settings:get("sasBrittleWeaponsToggle")
 end
 
 function getSettingShieldsAreBrittle()
-    return settings:get("brittleShieldsSetting")
+    return settings:get("sasBrittleShieldsToggle")
 end
 
 function getSettingDurabilityThreshold()
-    return settings:get("breakThresholdSetting")
+    return settings:get("sasBreakThreshold")
 end
 
 function getSettingLuckModifier()
-    return settings:get("luckModifierSetting")
-end
-
-function getSettingBrittleMaterialsAsArray()
-    local t = {}
-    for word in string.gmatch(settings:get("brittleMaterialsSetting"), '([^, ]+)') do
-        table.insert(t, word)
-    end
-    return t
+    return settings:get("sasLuckModifier")
 end
 
 function getSettingWhiteListedTypesAsArray()
     local t = {}
-    for word in string.gmatch(settings:get("whiteListedTypesSetting"), '([^, ]+)') do
+    for word in string.gmatch(settings:get("sasWhiteListedTypes"), '([^, ]+)') do
         table.insert(t, word)
     end
     return t
 end
 
 function getSettingDebug()
-    return settings:get("brittleDebug")
+    return settings:get("sasBrittleDebugToggle")
 end
 
 -- -----------------------------------------------------------------------------
@@ -197,4 +191,11 @@ function checkForItemBreak(itemCondition, itemHealth)
     
     return broken
 end
+
+function itemBreakAlert(name)
+    ui.showMessage(string.format(L("itemBreakMessage", {name = name})))
+    ambient.playSound("critical damage")
+    ambient.playSound("repair fail")
+end
+
 

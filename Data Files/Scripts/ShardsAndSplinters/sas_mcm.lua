@@ -23,44 +23,44 @@ I.Settings.registerGroup {
     permanentStorage = false,
     settings = {
         {
-            key = "brittleWeaponsSetting",
-            name = "Enable/Disable Weapons breaking",
-            description= "Enable or disable the chance for weapons to shatter.",
+            key = "sasBrittleWeaponsToggle",
+            name = "sasBrittleWeaponsToggleName",
+            description = "sasBrittleWeaponsToggleDesc",
             default = true,
             renderer = "checkbox"
         },
         {
-            key = "brittleShieldsSetting",
-            name = "Enable/Disable Shields breaking",
-            description= "Enable or disable the chance for shields to shatter.",
+            key = "sasBrittleShieldsToggle",
+            name = "sasBrittleShieldsToggleName",
+            description = "sasBrittleShieldsToggleDesc",
             default = true,
             renderer = "checkbox"
         },
         {
-            key = "breakThresholdSetting",
-            name = "Durability Threshold",
-            description= "When a weapon's durability falls below this percentage, it becomes at risk of breaking.",
+            key = "sasBreakThreshold",
+            name = "sasBreakThresholdName",
+            description = "sasBreakThresholdDesc",
             default = 90,
             renderer = "number"
         },
         {
-            key = "luckModifierSetting",
-            name = "Luck Modifier",
-            description= "Negatively affects how luck reduces the chance of a weapon breaking. A higher number increases the chance of breaking.",
+            key = "sasLuckModifier",
+            name = "sasLuckModifierName",
+            description = "sasLuckModifierDesc",
             default = 1.5,
             renderer = "number"
         },
         {
-            key = "whiteListedTypesSetting",
-            name = "Whitelisted Materials and Types",
-            description= "List of materials and weapon types that will not shatter despite being damaged. Keywords are checked to exist within the weapon model.",
+            key = "sasWhiteListedTypes",
+            name = "sasWhiteListedTypesName",
+            description = "sasWhiteListedTypesDesc",
             default = "dwemer, ebony, daedric, adamant, anarchy, w_de_fork, w_art, _uni",
             renderer = "textLine"
         },
         {
-            key = "brittleDebug",
-            name = "Debug Log",
-            description= "Enables additional information in the console log for debugging purposes.",
+            key = "sasBrittleDebugToggle",
+            name = "sasBrittleDebugToggleName",
+            description = "sasBrittleDebugToggleDesc",
             default = false,
             renderer = "checkbox"
         }

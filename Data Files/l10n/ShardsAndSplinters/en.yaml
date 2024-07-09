@@ -1,6 +1,29 @@
 name: "Shards & Splinters"
-description:
-"Adds the chance for your weapon to break if you don’t take care of it. Most weapons can shatter, except for high-quality ones like adamantium, dwemer, and daedric. Artifact weapons are safe, your regular magical weapon is not. \n\n
-When your weapon’s durability drops below a certain threshold, there’s a growing chance it might shatter mid-fight. Your luck attribute decreases this chance."
+description: |
+  Adds the chance for your weapons and shields to break if you don’t take care of them. Most items can shatter, except for high-quality ones like adamantium, dwemer, and daedric. Artifact weapons and shields are safe, but regular magical items are not.
+  
+  When an item's durability drops below a certain threshold, there’s an increasing chance it might shatter mid-fight. Your luck attribute decreases this chance.
+
 settingsTitle: "Options"
 settingsDesc: "Settings for this mod"
+
+sasBrittleWeaponsToggleName: "Enable/Disable Weapon Breaking"
+sasBrittleWeaponsToggleDesc: "Enable or disable the chance for weapons to shatter."
+
+sasBrittleShieldsToggleName: "Enable/Disable Shield Breaking"
+sasBrittleShieldsToggleDesc: "Enable or disable the chance for shields to shatter."
+
+sasBreakThresholdName: "Durability Threshold"
+sasBreakThresholdDesc: "When an item's durability falls below this percentage, it becomes at risk of breaking."
+
+sasLuckModifierName: "Luck Modifier"
+sasLuckModifierDesc: "Negatively affects how luck reduces the chance of an item breaking. A higher number increases the chance of breaking."
+
+sasWhiteListedTypesName: "Whitelisted Materials and Types"
+sasWhiteListedTypesDesc: "List of materials and types that will not shatter despite being damaged. Keywords are checked to exist within the item model."
+
+sasBrittleDebugToggleName: "Debug Log"
+sasBrittleDebugToggleDesc: "Enables additional information in the console log for debugging purposes."
+
+itemBreakMessage: "Your {name} broke!"
+

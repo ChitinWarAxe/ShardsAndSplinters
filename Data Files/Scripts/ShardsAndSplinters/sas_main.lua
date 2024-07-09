@@ -6,7 +6,7 @@ local ambient = require('openmw.ambient')
 local core = require('openmw.core')
 local storage = require('openmw.storage')
 local interfaces = require('openmw.interfaces')
-local sasUtil = require('scripts.sas_util')
+local sasUtil = require('scripts.shardsandsplinters.sas_util')
 
 local savedWeaponCondition = 0
 local savedWeaponId = 0
@@ -49,10 +49,8 @@ local loop = time.runRepeatedly(function()
                 end
 
                 if (checkForBreak() or getEquippedWeaponDurability() == 0) then
-                    ui.showMessage('Your ' .. getEquippedWeaponName() .. ' broke!')   
-                    core.sendGlobalEvent("remove", {object=getEquippedWeapon()})         
-                    ambient.playSound("critical damage")
-                    ambient.playSound("repair fail")
+                    itemBreakAlert(getEquippedWeaponName())
+                    core.sendGlobalEvent("remove", {object=getEquippedWeapon()})
                 end            
             end
             
@@ -93,10 +91,8 @@ local loop = time.runRepeatedly(function()
                 end
                 
                     if (checkForItemBreak(getEquippedShieldCondition(), getEquippedShieldHealth())) then
-                    ui.showMessage('Your ' .. getEquippedShieldName() .. ' broke!')   
-                    core.sendGlobalEvent("remove", {object=getShieldSlot()})         
-                    ambient.playSound("critical damage")
-                    ambient.playSound("repair fail")
+                    itemBreakAlert(getEquippedShieldName())
+                    core.sendGlobalEvent("remove", {object=getShieldSlot()})
                 end      
             end
             

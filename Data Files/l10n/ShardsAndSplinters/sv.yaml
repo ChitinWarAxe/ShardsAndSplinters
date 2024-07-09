@@ -1,0 +1,29 @@
+name: "Splitter & Skärvor"
+description: |
+  Lägger till möjligheten att dina vapen och sköldar kan gå sönder om du inte sköter om dem. De flesta vapen kan splittras, förutom högkvalitativa som adamantium, dwemer och daedriska. Artefaktvapen är säkra, men dina vanliga magiska vapen är inte det.
+  
+  När ett vapen når en viss hållbarhetsgräns finns det en ökande risk att det kan gå sönder mitt under strid. Din lyckofaktor minskar denna risk.
+
+settingsTitle: "Inställningar"
+settingsDesc: "Inställningar för detta mod"
+
+sasBrittleWeaponsToggleName: "Aktivera/Inaktivera Vapenbrott"
+sasBrittleWeaponsToggleDesc: "Aktivera eller inaktivera möjligheten för vapen att splittras."
+
+sasBrittleShieldsToggleName: "Aktivera/Inaktivera Sköldbrott"
+sasBrittleShieldsToggleDesc: "Aktivera eller inaktivera möjligheten för sköldar att splittras."
+
+sasBreakThresholdName: "Hållbarhetsgräns"
+sasBreakThresholdDesc: "När ett föremåls hållbarhet faller under detta procenttal blir det sårbart för att gå sönder."
+
+sasLuckModifierName: "Lyckomodifierare"
+sasLuckModifierDesc: "Påverkar negativt hur lycka minskar risken för att ett föremål går sönder. Ett högre nummer ökar risken."
+
+sasWhiteListedTypesName: "Vitlistade Material och Typer"
+sasWhiteListedTypesDesc: "Lista över material och vapentyper som inte kommer att splittras trots skador. Nyckelord kontrolleras mot vapenmodellen."
+
+sasBrittleDebugToggleName: "Felsökningslogg"
+sasBrittleDebugToggleDesc: "Aktiverar ytterligare information i konsollens logg för felsökning."
+
+itemBreakMessage: "Ditt {name} gick sönder!"
+
