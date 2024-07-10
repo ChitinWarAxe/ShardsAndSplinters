@@ -1,0 +1,29 @@
+name: "碎做一地"
+description: |
+  如果不注意保养，会增加武器和护盾破碎的几率。大多数物品都会破碎，但精金类、锻莫类和迪德拉类等高品质物品除外。作为神器的武器和盾牌是安全的，但普通附魔物品则不安全。
+  
+  当一件物品的耐久度低于某个临界值时，它在战斗中碎裂的几率就会增加。运气属性会降低这种几率。
+
+settingsTitle: "选项"
+settingsDesc: "对该mod进行设置"
+
+sasBrittleWeaponsToggleName: "启用/禁用武器破碎"
+sasBrittleWeaponsToggleDesc: "启用或禁用武器碎裂的几率。"
+
+sasBrittleShieldsToggleName: "启用/禁用盾牌破碎"
+sasBrittleShieldsToggleDesc: "启用或禁用盾牌碎裂的几率。"
+
+sasBreakThresholdName: "耐久性临界值"
+sasBreakThresholdDesc: "当一件物品的耐久度低于这个百分比时，它就会有破碎的风险。"
+
+sasLuckModifierName: "幸运值修正"
+sasLuckModifierDesc: "运气如何降低物品破碎几率的负面影响程度。数字越大，破碎几率越高。"
+
+sasWhiteListedTypesName: "白名单所列物品和类型"
+sasWhiteListedTypesDesc: "即使损坏也不会破碎的物品和类型列表。检查物品模型中是否存在关键字。"
+
+sasBrittleDebugToggleName: "调试日志"
+sasBrittleDebugToggleDesc: "启用控制台日志中的附加信息，以便调试。"
+
+itemBreakMessage: "你的 {name} 坏掉了！"
+
