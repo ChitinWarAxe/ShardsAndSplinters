@@ -2,105 +2,93 @@ local ui = require('openmw.ui')
 local self = require('openmw.self')
 local types = require('openmw.types')
 local time = require('openmw_aux.time')
-local ambient = require('openmw.ambient')
 local core = require('openmw.core')
-local storage = require('openmw.storage')
-local interfaces = require('openmw.interfaces')
 local sasUtil = require('scripts.shardsandsplinters.sas_util')
 
-local savedWeaponCondition = 0
-local savedWeaponId = 0
-local isSavedWeaponBrittle = false
+local savedWeaponInfo = nil
+local savedShieldInfo = nil
 
-local savedShieldCondition = 0
-local savedShieldId = 0
-local isSavedShieldBrittle = false
+local function debugPrint(message)
+    if getSettingDebug() then
+        print(message)
+    end
+end
+
+local function handleEquipmentChange(equipmentType, newInfo)
+    local savedInfo = equipmentType == "weapon" and savedWeaponInfo or savedShieldInfo
+    if not savedInfo or savedInfo.id ~= newInfo.id then
+        debugPrint(string.format('Equipped: %s, Model: %s, Type: %s', newInfo.name, newInfo.model, newInfo.type))
+        debugPrint(string.format('Condition: %.2f%%, breakchance: %.2f%%, Threshold: %d%%', 
+            getItemPercentualDurability(newInfo)/10, 
+            getItemBreakChance(newInfo)/10, 
+            getSettingDurabilityThreshold()))
+        
+        if isItemBrittle(newInfo.model) then
+            debugPrint(string.format('Your %s looks somewhat brittle!', equipmentType))
+        end
+        
+        return newInfo
+    end
+    return savedInfo
+end
+
+local function checkAndHandleBreak(equipmentType, info)
+    if isItemBrittle(info.model) 
+    and getItemPercentualDurability(info) <= getSettingDurabilityThreshold() * 10
+    and (equipmentType ~= "weapon" or info.type ~= 11) -- Exclude thrown type for weapons
+    then
+        if checkForItemBreak(info)
+        -- or info.condition == 0 
+        then
+            itemBreakAlert(info.name)
+            core.sendGlobalEvent("remove", {object = equipmentType == "weapon" and getEquippedWeapon() or getEquippedShield()})
+            return true
+        end
+    end
+    return false
+end
+
+local function processEquipment(equipmentType)
+    local getEquippedFunc = equipmentType == "weapon" and getEquippedWeapon or getEquippedShield
+    local isEquippedFunc = equipmentType == "weapon" and isWeaponSlotAWeapon or isShieldSlotAShield
+    local itemType = equipmentType == "weapon" and types.Weapon or types.Armor
+    local isBrittleSettingFunc = equipmentType == "weapon" and getSettingWeaponsAreBrittle or getSettingShieldsAreBrittle
     
+    if getEquippedFunc() and isBrittleSettingFunc() and isEquippedFunc() then
+        local newInfo = getItemInfo(getEquippedFunc(), itemType)
+        local savedInfo = equipmentType == "weapon" and savedWeaponInfo or savedShieldInfo
+        
+        if not savedInfo or savedInfo.id ~= newInfo.id then
+            -- Equipment changed or first equip
+            if equipmentType == "weapon" then
+                savedWeaponInfo = newInfo
+            else
+                savedShieldInfo = newInfo
+            end
+            debugPrint(string.format('Equipped: %s, Model: %s, Type: %s', newInfo.name, newInfo.model, newInfo.type))
+            debugPrint(string.format('Condition: %.2f%%, breakchance: %.2f%%, Threshold: %d%%', 
+                getItemPercentualDurability(newInfo)/10, 
+                getItemBreakChance(newInfo)/10, 
+                getSettingDurabilityThreshold()))
+            
+            if isItemBrittle(newInfo.model) then
+                debugPrint(string.format('Your %s looks somewhat brittle!', equipmentType))
+            end
+        elseif newInfo.condition < savedInfo.condition then
+            -- Same item, condition worsened
+            debugPrint(string.format("Your %s's condition got worse! %d -> %d", equipmentType, savedInfo.condition, newInfo.condition))
+            if not checkAndHandleBreak(equipmentType, newInfo) then
+                if equipmentType == "weapon" then
+                    savedWeaponInfo = newInfo
+                else
+                    savedShieldInfo = newInfo
+                end
+            end
+        end
+    end
+end
+
 local loop = time.runRepeatedly(function()
-
-    if getEquippedWeapon() and getSettingWeaponsAreBrittle() then
-
-        if isWeaponSlotAWeapon() then
-
-            if (savedWeaponId ~= getEquippedWeaponId()) then
-
-                savedWeaponId = getEquippedWeaponId()
-                savedWeaponCondition = getEquippedWeaponDurability()
-                isSavedWeaponBrittle = isEquippedWeaponBrittle()
-                
-                if getSettingDebug() then
-                    print('Equipped: ' .. getEquippedWeaponName() .. ', Model: ' .. getEquippedWeaponModel() .. ', Type: ' .. getEquippedWeaponType() )
-                    print('Condition: ' .. getEquippedWeaponPercentualDurability()/10 .. '%, breakchance: ' .. getEquippedWeaponBreakChance()/10 .. '%, Threshold: ' .. getSettingDurabilityThreshold() .. '%')
-                    
-                    if isSavedWeaponBrittle then
-                        print('Your weapon looks somewhat brittle!')
-                    end
-                end
-            end
-            
-            if isSavedWeaponBrittle 
-            and getEquippedWeaponDurability() < savedWeaponCondition 
-            and getEquippedWeaponPercentualDurability() <= getSettingDurabilityThreshold()*10 
-            and 11 ~= getEquippedWeaponType() 
-            then
-                
-                if getSettingDebug() then
-                    print("Your weapon's condition got worse! " .. savedWeaponCondition .. " -> " .. getEquippedWeaponDurability())
-                end
-
-                if (checkForBreak() or getEquippedWeaponDurability() == 0) then
-                    itemBreakAlert(getEquippedWeaponName())
-                    core.sendGlobalEvent("remove", {object=getEquippedWeapon()})
-                end            
-            end
-            
-            savedWeaponCondition = getEquippedWeaponDurability()
-        
-        end
-
-    end
-
-    -- Do the same for shields. ------------------------------------------------
-    
-    if getShieldSlot() and getSettingShieldsAreBrittle() then
-    
-        if isShieldSlotAShield() then
-        
-            if (savedShieldId ~= getShieldSlotId()) then  -- Equipped another shield, or Lua script was reloaded.
-                
-                savedShieldId = getShieldSlotId()
-                savedShieldCondition = getEquippedShieldCondition()
-                isSavedShieldBrittle = isItemBrittle(getEquippedShieldModel())
-                
-                if getSettingDebug() then
-                    print('Equipped: ' .. getEquippedShieldName() .. ', Model: ' .. getEquippedShieldModel())
-                    print('Condition: ' .. getEquippedShieldPercentualCondition()/10 .. '%, breakchance: ' .. getItemBreakChance(getEquippedShieldCondition(),getEquippedShieldHealth() )/10 .. '%, Threshold: ' .. getSettingDurabilityThreshold() .. '%')
-                --    
-                    if isSavedShieldBrittle then
-                        print('Your shield looks somewhat brittle!')
-                    end
-                end
-            end
-            
-            if (isSavedShieldBrittle
-                and getEquippedShieldCondition() < savedShieldCondition
-                and getEquippedShieldPercentualCondition() <= getSettingDurabilityThreshold()*10)
-            then
-                if getSettingDebug() then
-                    print("Your shield's condition got worse! " .. savedShieldCondition .. " -> " .. getEquippedShieldCondition() )
-                end
-                
-                    if (checkForItemBreak(getEquippedShieldCondition(), getEquippedShieldHealth())) then
-                    itemBreakAlert(getEquippedShieldName())
-                    core.sendGlobalEvent("remove", {object=getShieldSlot()})
-                end      
-            end
-            
-            savedShieldCondition = getEquippedShieldCondition()
-        
-        end
-        
-    end
-    
-end,0.5 )  
-
+    processEquipment("weapon")
+    processEquipment("shield")
+end, 0.5)

@@ -13,183 +13,95 @@ math.randomseed(os.time())
 
 local settings = storage.playerSection("ShardsAndSplintersSettings")
 
+-- Settings functions
+local function getSetting(key)
+    return settings:get(key)
+end
+
 function getSettingWeaponsAreBrittle()
-    return settings:get("sasBrittleWeaponsToggle")
+    return getSetting("sasBrittleWeaponsToggle")
 end
 
 function getSettingShieldsAreBrittle()
-    return settings:get("sasBrittleShieldsToggle")
+    return getSetting("sasBrittleShieldsToggle")
 end
 
 function getSettingDurabilityThreshold()
-    return settings:get("sasBreakThreshold")
+    return getSetting("sasBreakThreshold")
 end
 
 function getSettingLuckModifier()
-    return settings:get("sasLuckModifier")
+    return getSetting("sasLuckModifier")
 end
 
+local whitelistedTypesCache = nil
+
 function getSettingWhiteListedTypesAsArray()
-    local t = {}
-    for word in string.gmatch(settings:get("sasWhiteListedTypes"), '([^, ]+)') do
-        table.insert(t, word)
+    if not whitelistedTypesCache then
+        whitelistedTypesCache = {}
+        for word in string.gmatch(getSetting("sasWhiteListedTypes"), '([^, ]+)') do
+            table.insert(whitelistedTypesCache, word)
+        end
     end
-    return t
+    return whitelistedTypesCache
 end
 
 function getSettingDebug()
-    return settings:get("sasBrittleDebugToggle")
+    return getSetting("sasBrittleDebugToggle")
 end
 
--- -----------------------------------------------------------------------------
-
-function getModifiedLuck () 
+-- General utility functions
+function getModifiedLuck() 
     return types.Actor.stats.attributes.luck(self).modified or 0
 end
 
-function getEquippedWeapon() 
-    return types.Actor.getEquipment(self.object, types.Actor.EQUIPMENT_SLOT.CarriedRight)
+function getEquippedItem(slot)
+    return types.Actor.getEquipment(self.object, slot)
 end
 
-function isWeaponSlotAWeapon()
-    return types.Weapon.objectIsInstance(getEquippedWeapon())
+function isItemOfType(item, itemType)
+    return itemType.objectIsInstance(item)
 end
 
-function getEquippedWeaponId() 
-    return getEquippedWeapon().id or 0
+function getItemInfo(item, itemType)
+    if not item then return nil end
+    local record = itemType.record(item)
+    return {
+        id = item.id or 0,
+        name = record.name or "",
+        model = record.model or "",
+        health = record.health or 0,
+        condition = types.Item.itemData(item).condition or 0,
+        type = record.type
+    }
 end
 
-function getEquippedWeaponName() 
-    return types.Weapon.record(getEquippedWeapon()).name or 0
+function getItemPercentualDurability(info)
+    return (info.condition / info.health) * 1000
 end
 
-function getEquippedWeaponModel () 
-    return types.Weapon.record(getEquippedWeapon()).model or 0
-end
-
-function getEquippedWeaponHealth () 
-    return types.Weapon.record(getEquippedWeapon()).health or 0
-end
-
-function getEquippedWeaponDurability () 
-    return types.Weapon.itemData(getEquippedWeapon()).condition or 0
-end
-
-function getEquippedWeaponPercentualDurability ()
-    return ((getEquippedWeaponDurability()/getEquippedWeaponHealth())*1000)
-end
-
-function getEquippedWeaponType()
-    return types.Weapon.record(getEquippedWeapon()).type
-end
-
-function getEquippedWeaponBreakChance ()
-    local breakchance = (1000-((getEquippedWeaponDurability()/getEquippedWeaponHealth())*1000)) / (getModifiedLuck()/getSettingLuckModifier()) 
-    return breakchance
-end
-
-function isEquippedWeaponBrittle ()
-
-    local tmpBrittle = true
-
+function isItemBrittle(model)
     for _, brittleMaterial in ipairs(getSettingWhiteListedTypesAsArray()) do
-        if string.find(string.lower(getEquippedWeaponModel()), string.lower(brittleMaterial)) then
-            tmpBrittle = false
-            break
+        if string.find(string.lower(model), string.lower(brittleMaterial)) then
+            return false
         end
     end
-    
-    return tmpBrittle
+    return true
 end
 
-function checkForBreak()
-    
-    broken = false
-    
+function getItemBreakChance(info)
+    return (1000 - getItemPercentualDurability(info)) / (getModifiedLuck() / getSettingLuckModifier())
+end
+
+function checkForItemBreak(info)
     local rand = math.random(1, 1000)
-    
-    if rand <= getEquippedWeaponBreakChance() then
-        broken = true
-    end
+    local breakChance = getItemBreakChance(info)
     
     if getSettingDebug() then
-        print('Breaking chance: ' .. getEquippedWeaponBreakChance()/10 .. '%, Rand: ' .. rand)
+        print(string.format('Breaking chance: %.2f%%, Rand: %d', breakChance / 10, rand))
     end
     
-    return broken
-end
-
--- Shield Functions ------------------------------------------------------------
-
-function getShieldSlot()
-    return types.Actor.getEquipment(self.object, types.Actor.EQUIPMENT_SLOT.CarriedLeft)
-end
-
-function isShieldSlotAShield()
-    return types.Armor.objectIsInstance(getShieldSlot())
-end
-
-function getEquippedShieldName() 
-    return types.Armor.record(getShieldSlot()).name
-end
-
-function getShieldSlotId()
-    return getShieldSlot().id or 0
-end
-
-function getEquippedShieldModel() 
-    return types.Armor.record(getShieldSlot()).model
-end
-
-function getEquippedShieldHealth() 
-    return types.Armor.record(getShieldSlot()).health
-end
-
-function getEquippedShieldCondition() 
-    return types.Item.itemData(getShieldSlot()).condition
-end
-
-function getEquippedShieldPercentualCondition()
-    return (getEquippedShieldCondition()/getEquippedShieldHealth())*1000
-end
-
-function getItemCondition(item) 
-    return types.Item.itemData(item).condition or 0
-end
-
-function isItemBrittle(itemModel)
-
-    local tmpBrittle = true
-
-    for _, brittleMaterial in ipairs(getSettingWhiteListedTypesAsArray()) do
-        if string.find(string.lower(itemModel), string.lower(brittleMaterial)) then
-            tmpBrittle = false
-            break
-        end
-    end
-    
-    return tmpBrittle
-end
-
-function getItemBreakChance(itemCondition, itemHealth)
-    return (1000-((itemCondition/itemHealth)*1000)) / (getModifiedLuck()/getSettingLuckModifier()) 
-end
-
-function checkForItemBreak(itemCondition, itemHealth)
-    
-    broken = false
-    
-    local rand = math.random(1, 1000)
-    
-    if rand <= getItemBreakChance(itemCondition, itemHealth ) then
-        broken = true
-    end
-    
-    if getSettingDebug() then
-        print('Breaking chance: ' .. getItemBreakChance(itemCondition, itemHealth )/10 .. '%, Rand: ' .. rand)
-    end
-    
-    return broken
+    return rand <= breakChance
 end
 
 function itemBreakAlert(name)
@@ -198,4 +110,21 @@ function itemBreakAlert(name)
     ambient.playSound("repair fail")
 end
 
+-- Weapon-specific functions
+function getEquippedWeapon()
+    return getEquippedItem(types.Actor.EQUIPMENT_SLOT.CarriedRight)
+end
+
+function isWeaponSlotAWeapon()
+    return isItemOfType(getEquippedWeapon(), types.Weapon)
+end
+
+-- Shield-specific functions
+function getEquippedShield()
+    return getEquippedItem(types.Actor.EQUIPMENT_SLOT.CarriedLeft)
+end
+
+function isShieldSlotAShield()
+    return isItemOfType(getEquippedShield(), types.Armor)
+end
 

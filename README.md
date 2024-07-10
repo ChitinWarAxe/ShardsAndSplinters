@@ -10,17 +10,6 @@ When the condition of your weapon or shield drops below a certain threshold, the
 
 ![Your chitin war axe broke!](images/broke.png "Your chitin war axe broke!")
 
-## Configuration
-
-Customize the mod to your liking with these settings:
-
-* **Enable or disable the chance for your weapon breaking.**
-* **Enable or disable the chance for your shield breaking.**
-* **Durability Threshold:** Set the durability percentage at below weapons and shields are at risk.
-* **Luck Modifier:** Negativly affects how luck affects weapon and shield breaking chances. (A greater number increases the chance.)
-* **Whitelisted Materials and Types:** List of materials and weapons that won’t shatter. The keywords are based on the model name of the weapon or shield.
-* **Debug Log:** Toggle extra console information for debugging.
-
 ## Roadmap
 
 * Add chance of weapons shattering - **DONE**

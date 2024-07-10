@@ -1,10 +1,3 @@
-local ui = require('openmw.ui')
-local self = require('openmw.self')
-local types = require('openmw.types')
-local time = require('openmw_aux.time')
-local ambient = require('openmw.ambient')
-local core = require('openmw.core')
-local storage = require('openmw.storage')
 local I = require('openmw.interfaces')
 
 I.Settings.registerPage {
