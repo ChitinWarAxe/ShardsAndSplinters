@@ -1,10 +1,12 @@
 # Shards & Splinters
 
+Adds the chance for weapons and shields to break in combat.
+
 ![A drawing of a dunmer with a broken sword](images/dunmer.png "A drawing of a dunmer with a broken sword")
 
 ## Features
 
-This mod adds the chance for your weapons and shields to break if you don’t take care of them. An item broken that way is entirely destroyed and is removed from your inventory. Most weapons and shields can shatter, except for those of higher quality like adamantium, dwemer, and daedric. Artifact weapons are safe, your regular magical weapon or shield is not.
+This mod adds the chance for your weapons and shields to break during combat if you don’t take care of them. An item broken that way is entirely destroyed and is removed from your inventory. Most weapons and shields can shatter, except for those of higher quality like adamantium, dwemer, and daedric. Artifact weapons are safe, your regular magical weapon or shield is not.
 
 When the condition of your weapon or shield drops below a certain threshold, there’s a growing chance it might shatter mid-fight. Your luck attribute decreases this chance.
 

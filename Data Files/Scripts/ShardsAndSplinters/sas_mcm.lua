@@ -47,7 +47,7 @@ I.Settings.registerGroup {
             key = "sasWhiteListedTypes",
             name = "sasWhiteListedTypesName",
             description = "sasWhiteListedTypesDesc",
-            default = "dwemer, ebony, daedric, adamant, anarchy, w_de_fork, w_art, _uni",
+            default = "dwemer, ebony, daedric, adamant, _art, _uni, anarchy, w_de_fork, nerevar, almalexia, stendars, hircine, ariel",
             renderer = "textLine"
         },
         {
